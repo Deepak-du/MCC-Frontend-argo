@@ -7,7 +7,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://git.intuitive-ai.de/deepak/MCC
+    repoURL: https://github.com/Deepak-du/MCC-Frontend-argo
     targetRevision: HEAD
     path: dev
   destination: 
