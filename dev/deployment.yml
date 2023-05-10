@@ -5,7 +5,7 @@ metadata:
   labels:
     app: frontend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: frontend
@@ -14,10 +14,9 @@ spec:
       labels:
         app: frontend
     spec:
-      imagePullSecrets:
-        - name: regcred
       containers:
         - name: frontend
           image: harbor.kube.intuitive-ai.de/mcc/frontend:latest
           ports:
-            - containerPort: 3000
+            - containerPort: 80
+
