@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: frontend
+          image: harbor.kube.intuitive-ai.de/mcc/frontend@sha256:8f44354f926b1ae3a0aedfd99e3b62dbcbd78d750926d0c17be75d7d7c23a612
+          ports:
+            - containerPort: 3000
