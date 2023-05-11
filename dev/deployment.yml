@@ -1,24 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
-  labels:
-    app: frontend
+  name: mcc-frontend
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: frontend
+      app: mcc-frontend
+  replicas: 3 # Change this to the desired number of replicas
   template:
     metadata:
       labels:
-        app: frontend
+        app: mcc-frontend
     spec:
       containers:
-      - name: frontend
-        image: harbor.kube.intuitive-ai.de/mcc/frontend:latest
+      - name: mcc-frontend
+        image: deepakdu/mcc-frontend:latest
         ports:
         - containerPort: 80
-      imagePullSecrets:
-      - name: harbor-creds
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcc-frontend
+spec:
+  selector:
+    app: mcc-frontend
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  type: LoadBalancer # Change this to the desired service type
+
 
