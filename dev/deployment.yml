@@ -15,8 +15,10 @@ spec:
         app: frontend
     spec:
       containers:
-        - name: frontend
-          image: harbor.kube.intuitive-ai.de/mcc/frontend:latest
-          ports:
-            - containerPort: 80
+      - name: frontend
+        image: harbor.kube.intuitive-ai.de/mcc/frontend:latest
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: harbor-creds
 
