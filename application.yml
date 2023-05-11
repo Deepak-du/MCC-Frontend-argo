@@ -1,23 +1,30 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: mcc-frontend
+  name: frontend
   namespace: argocd
 spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
   project: default
-
   source:
+    path: .
     repoURL: https://github.com/Deepak-du/MCC-Frontend-argo
     targetRevision: HEAD
-    path: dev
-  destination: 
-    server: https://kubernetes.default.svc
-    namespace: myapp
+    helm:
+      values: |
+        image:
+          repository: harbor.kube.intuitive-ai.de/mcc/frontend
+          tag: latest
+        service:
+          type: LoadBalancer
+          port: 80
+          targetPort: 80
+        ingress:
+          enabled: true
+          annotations:
+            nginx.ingress.kubernetes.io/rewrite-target: /
+          paths:
+            - /
 
-  syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
-
-    automated:
-      selfHeal: true
-      prune: true
