@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: parse-dashboard
+  namespace: stne-parse
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: parse-dashboard
+  template:
+    metadata:
+      labels:
+        app: parse-dashboard
+    spec:
+      containers:
+      - name: parse-dashboard
+        image: parseplatform/parse-dashboard:latest
+        env:
+        - name: PARSE_DASHBOARD_CONFIG
+          value: |
+            {
+              "apps": [
+                {
+                  "serverURL": "http://162.19.225.189:1337/parse",
+                  "appId": "123456789",
+                  "masterKey": "23456686",
+                  "appName": "STNE"
+                }
+              ],
+              "users": [
+                {
+                  "user": "stnedev",
+                  "pass": "g8h6vzA655e#"
+                }
+              ]
+            }
+        ports:
+        - containerPort: 4040
